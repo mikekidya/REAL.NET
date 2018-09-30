@@ -44,6 +44,7 @@ namespace SampleDataflowProject
                         }
                         else
                         {
+                            counting.Add(neighbor);
                             cost[neighbor] = cost[minCity] + road.GetCost();
                             prevRoad[neighbor] = road;
                         }
@@ -105,6 +106,7 @@ namespace SampleDataflowProject
                         }
                         else
                         {
+                            counting.Add(neighbor);
                             cost[neighbor] = cost[minCity] + road.GetCost();
                             prevRoad[neighbor] = road;
                         }

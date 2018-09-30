@@ -20,21 +20,15 @@ namespace SampleDataflowProject
             this.name = name;
             railwayRoadsIn = new LinkedList<Road>();
             railwayRoadsOut = new LinkedList<Road>();
+            airwayRoadsIn = new LinkedList<Road>();
+            airwayRoadsOut = new LinkedList<Road>();
         }
 
         public void AddAirwayRoad(City destination, int cost)
         {
             Road road = new Road(Road.RoadType.Airway, cost, this, destination);
-            if (!HasAirport())
-            {
-                isHasAirport = true;
-                airwayRoadsIn = new LinkedList<Road>();
-            }
-            if (!destination.HasAirport())
-            {
-                destination.isHasAirport = true;
-                destination.airwayRoadsOut = new LinkedList<Road>();
-            }
+            this.isHasAirport = true;
+            destination.isHasAirport = true;
             this.airwayRoadsOut.AddLast(road);
             destination.airwayRoadsIn.AddLast(road);
         }
