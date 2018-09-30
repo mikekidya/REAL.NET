@@ -37,5 +37,10 @@ namespace SampleDataflowProject
         {
             return destinationCity;
         }
+
+        public int GetCost()
+        {
+            return cost;
+        }
     }
 }

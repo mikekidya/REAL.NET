@@ -10,13 +10,16 @@ namespace SampleDataflowProject
     {
         private readonly String name;
         private bool isHasAirport = false;
-        private LinkedList<Road> railwayRoads;
-        private LinkedList<Road> airwayRoads;
+        private LinkedList<Road> railwayRoadsIn;
+        private LinkedList<Road> airwayRoadsIn;
+        private LinkedList<Road> railwayRoadsOut;
+        private LinkedList<Road> airwayRoadsOut;
 
         public City(String name = "No name")
         {
             this.name = name;
-            railwayRoads = new LinkedList<Road>();
+            railwayRoadsIn = new LinkedList<Road>();
+            railwayRoadsOut = new LinkedList<Road>();
         }
 
         public void AddAirwayRoad(City destination, int cost)
@@ -25,14 +28,22 @@ namespace SampleDataflowProject
             if (!HasAirport())
             {
                 isHasAirport = true;
-                airwayRoads = new LinkedList<Road>();
+                airwayRoadsIn = new LinkedList<Road>();
             }
-            airwayRoads.AddLast(road);
+            if (!destination.HasAirport())
+            {
+                destination.isHasAirport = true;
+                destination.airwayRoadsOut = new LinkedList<Road>();
+            }
+            this.airwayRoadsOut.AddLast(road);
+            destination.airwayRoadsIn.AddLast(road);
         }
 
         public void AddRailwayRoad(City destination, int cost)
         {
-            railwayRoads.AddLast(new Road(Road.RoadType.Railway, cost, this, destination));
+            Road road = new Road(Road.RoadType.Railway, cost, this, destination);
+            railwayRoadsOut.AddLast(road);
+            destination.railwayRoadsIn.AddLast(road);
         }
 
         public bool HasAirport()
@@ -40,14 +51,24 @@ namespace SampleDataflowProject
             return isHasAirport;
         }
 
-        public LinkedList<Road> GetAirwayRoads()
+        public LinkedList<Road> GetAirwayRoadsIn()
         {
-            return airwayRoads;
+            return airwayRoadsIn;
         }
 
-        public LinkedList<Road> GetRailwayRoads()
+        public LinkedList<Road> GetRailwayRoadsIn()
         {
-            return railwayRoads;
+            return railwayRoadsIn;
+        }
+
+        public LinkedList<Road> GetAirwayRoadsOut()
+        {
+            return airwayRoadsOut;
+        }
+
+        public LinkedList<Road> GetRailwayRoadsOut()
+        {
+            return railwayRoadsOut;
         }
 
         public String GetName()
