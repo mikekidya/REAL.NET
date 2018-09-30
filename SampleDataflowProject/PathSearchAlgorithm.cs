@@ -13,15 +13,71 @@ namespace SampleDataflowProject
         public static LinkedList<Road> ShortestPath(City departure, City arrival, SearchingType searchingType)
         {
 
-            return DijkstraPath(departure, arrival);
+            return DijkstraPath(departure, arrival, searchingType);
         }
 
         public static LinkedList<Road> ClosestAirport(City city, bool isReverseSearch = false)
         {
+            Dictionary<City, int> cost = new Dictionary<City, int>();
+            Dictionary<City, Road> prevRoad = new Dictionary<City, Road>();
+            HashSet<City> alreadyCounted = new HashSet<City>();
+            HashSet<City> counting = new HashSet<City>();
 
+            counting.Add(city);
+            cost[city] = 0;
+            while (counting.Count > 0)
+            {
+                int minDist = counting.Min(_ => cost[_]);
+                City minCity = counting.First(_ => (cost[_] == minDist));
+                foreach (Road road in isReverseSearch ? minCity.GetRailwayRoadsIn() : minCity.GetRailwayRoadsOut())
+                {
+                    City neighbor = isReverseSearch ? road.GetDepartationCity() : road.GetDestinationCity();
+                    if (!alreadyCounted.Contains(neighbor))
+                    {
+                        if (counting.Contains(neighbor))
+                        {
+                            if (cost[neighbor] > cost[minCity] + road.GetCost())
+                            {
+                                cost[neighbor] = cost[minCity] + road.GetCost();
+                                prevRoad[neighbor] = road;
+                            }
+                        }
+                        else
+                        {
+                            cost[neighbor] = cost[minCity] + road.GetCost();
+                            prevRoad[neighbor] = road;
+                        }
+                    }
+                }
+                counting.Remove(minCity);
+                alreadyCounted.Add(minCity);
+
+                if (minCity.HasAirport())
+                {
+                    LinkedList<Road> result = new LinkedList<Road>();
+                    City currentCity = minCity;
+                    while (prevRoad.ContainsKey(currentCity))
+                    {
+                        if (isReverseSearch)
+                        {
+                            result.AddLast(prevRoad[currentCity]);
+                            currentCity = prevRoad[currentCity].GetDestinationCity();
+                        }
+                        else
+                        {
+                            result.AddFirst(prevRoad[currentCity]);
+                            currentCity = prevRoad[currentCity].GetDepartationCity();
+                        }
+                        
+                    }
+                    return result;
+                }
+            }
+            return null;
         }
+    
 
-        private static LinkedList<Road> DijkstraPath(City departure, City arrival, Road.RoadType roadType)
+        private static LinkedList<Road> DijkstraPath(City departure, City arrival, SearchingType searchingType)
         {
             Dictionary<City, int> cost = new Dictionary<City, int>();
             Dictionary<City, Road> prevRoad = new Dictionary<City, Road>();
@@ -34,7 +90,7 @@ namespace SampleDataflowProject
             {
                 int minDist = counting.Min(city => cost[city]);
                 City minCity = counting.First(city => (cost[city] == minDist));
-                foreach (Road road in (roadType == Road.RoadType.Railway ? minCity.GetRailwayRoadsOut() : minCity.GetAirwayRoadsOut()))
+                foreach (Road road in (searchingType == SearchingType.OnlyRailway ? minCity.GetRailwayRoadsOut() : minCity.GetAirwayRoadsOut()))
                 {
                     City neighbor = road.GetDestinationCity(); 
                     if (!alreadyCounted.Contains(neighbor))
@@ -70,40 +126,6 @@ namespace SampleDataflowProject
                 }
             }
             return null;
-        }
-
-        private class CityWrapper
-        {
-            public City city;
-            public CityWrapper previous;
-            public Road previousRoad;
-            public int currentCost;
-
-            public CityWrapper(City city)
-            {
-                this.city = city;
-                previous = null;
-                previousRoad = null;
-                currentCost = int.MaxValue;
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (obj == null || GetType() != obj.GetType())
-                {
-                    return false;
-                }
-
-                return city == ((CityWrapper) obj).city;
-            }
-
-            // override object.GetHashCode
-            public override int GetHashCode()
-            {
-                // TODO: write your implementation of GetHashCode() here
-                throw new NotImplementedException();
-                return base.GetHashCode();
-            }
         }
 
     }
