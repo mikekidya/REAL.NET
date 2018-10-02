@@ -97,5 +97,26 @@ namespace SampleDataflowProject.Tests
             Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(c).Last().GetDestinationCity(), e);
             Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(d).Count(), 0);
         }
+
+        [TestMethod()]
+        public void OnlyAirportsTest()
+        {
+            City a = new City("A");
+            City b = new City("B");
+            City c = new City("C");
+            City d = new City("D");
+            City e = new City("E");
+            a.AddRailwayRoad(b, 1);
+            a.AddRailwayRoad(e, 1000);
+            b.AddRailwayRoad(d, 2);
+            b.AddRailwayRoad(e, 10);
+            c.AddRailwayRoad(b, 1);
+            c.AddRailwayRoad(e, 1);
+            d.AddRailwayRoad(c, 3);
+            b.AddAirwayRoad(e, 100);
+            d.AddAirwayRoad(e, 5);
+            Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(a).Last().GetDestinationCity(), b);
+            Assert.AreEqual(PathSearchAlgorithm.ShortestPath(b, e, PathSearchAlgorithm.SearchingType.OnlyAirway).Last().GetDestinationCity(), e);
+        }
     }
 }

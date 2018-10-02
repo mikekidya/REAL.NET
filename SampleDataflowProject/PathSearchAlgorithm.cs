@@ -74,7 +74,7 @@ namespace SampleDataflowProject
                     return result;
                 }
             }
-            return null;
+            return new LinkedList<Road>();
         }
     
 
@@ -127,7 +127,7 @@ namespace SampleDataflowProject
                     return result;
                 }
             }
-            return null;
+            return new LinkedList<Road>();
         }
 
     }
