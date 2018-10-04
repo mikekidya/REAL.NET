@@ -14,11 +14,11 @@ namespace SampleDataflowProject.Tests
         [TestMethod()]
         public void ShortestRailwayPathTest()
         {
-            City a = new City("A");
-            City b = new City("B");
-            City c = new City("C");
-            City d = new City("D");
-            City e = new City("E");
+            var a = new City("A");
+            var b = new City("B");
+            var c = new City("C");
+            var d = new City("D");
+            var e = new City("E");
             a.AddRailwayRoad(b, 1);
             a.AddRailwayRoad(e, 1000);
             b.AddRailwayRoad(d, 2);
@@ -26,19 +26,19 @@ namespace SampleDataflowProject.Tests
             c.AddRailwayRoad(b, 1);
             c.AddRailwayRoad(e, 1);
             d.AddRailwayRoad(c, 3);
-            LinkedList<Road> path = PathSearchAlgorithm.ShortestPath(a, e, PathSearchAlgorithm.SearchingType.OnlyRailway);
-            Assert.AreEqual(path.Sum(_ => _.GetCost()), 7);
-            Assert.AreEqual(path.First().GetDepartationCity(), a);
-            Assert.AreEqual(path.First().GetDestinationCity(), b);
+            LinkedList<Road> path = (LinkedList<Road>) PathSearchAlgorithm.ShortestPath(a, e, PathSearchAlgorithm.SearchingType.OnlyRailway);
+            Assert.AreEqual(path.Sum(_ => _.Cost), 7);
+            Assert.AreEqual(path.First().DepartCity, a);
+            Assert.AreEqual(path.First().DestinationCity, b);
             path.RemoveFirst();
-            Assert.AreEqual(path.First().GetDepartationCity(), b);
-            Assert.AreEqual(path.First().GetDestinationCity(), d);
+            Assert.AreEqual(path.First().DepartCity, b);
+            Assert.AreEqual(path.First().DestinationCity, d);
             path.RemoveFirst();
-            Assert.AreEqual(path.First().GetDepartationCity(), d);
-            Assert.AreEqual(path.First().GetDestinationCity(), c);
+            Assert.AreEqual(path.First().DepartCity, d);
+            Assert.AreEqual(path.First().DestinationCity, c);
             path.RemoveFirst();
-            Assert.AreEqual(path.First().GetDepartationCity(), c);
-            Assert.AreEqual(path.First().GetDestinationCity(), e);
+            Assert.AreEqual(path.First().DepartCity, c);
+            Assert.AreEqual(path.First().DestinationCity, e);
             path.RemoveFirst();
             Assert.AreEqual(path.Count(), 0);
         }
@@ -46,11 +46,11 @@ namespace SampleDataflowProject.Tests
         [TestMethod()]
         public void ShortestAirwayPathTest()
         {
-            City a = new City("A");
-            City b = new City("B");
-            City c = new City("C");
-            City d = new City("D");
-            City e = new City("E");
+            var a = new City("A");
+            var b = new City("B");
+            var c = new City("C");
+            var d = new City("D");
+            var e = new City("E");
             a.AddAirwayRoad(b, 1);
             a.AddAirwayRoad(e, 1000);
             b.AddAirwayRoad(d, 2);
@@ -58,19 +58,19 @@ namespace SampleDataflowProject.Tests
             c.AddAirwayRoad(b, 1);
             c.AddAirwayRoad(e, 1);
             d.AddAirwayRoad(c, 3);
-            LinkedList<Road> path = PathSearchAlgorithm.ShortestPath(a, e, PathSearchAlgorithm.SearchingType.OnlyAirway);
-            Assert.AreEqual(path.Sum(_ => _.GetCost()), 7);
-            Assert.AreEqual(path.First().GetDepartationCity(), a);
-            Assert.AreEqual(path.First().GetDestinationCity(), b);
+            LinkedList<Road> path = (LinkedList<Road>) PathSearchAlgorithm.ShortestPath(a, e, PathSearchAlgorithm.SearchingType.OnlyAirway);
+            Assert.AreEqual(path.Sum(_ => _.Cost), 7);
+            Assert.AreEqual(path.First().DepartCity, a);
+            Assert.AreEqual(path.First().DestinationCity, b);
             path.RemoveFirst();
-            Assert.AreEqual(path.First().GetDepartationCity(), b);
-            Assert.AreEqual(path.First().GetDestinationCity(), d);
+            Assert.AreEqual(path.First().DepartCity, b);
+            Assert.AreEqual(path.First().DestinationCity, d);
             path.RemoveFirst();
-            Assert.AreEqual(path.First().GetDepartationCity(), d);
-            Assert.AreEqual(path.First().GetDestinationCity(), c);
+            Assert.AreEqual(path.First().DepartCity, d);
+            Assert.AreEqual(path.First().DestinationCity, c);
             path.RemoveFirst();
-            Assert.AreEqual(path.First().GetDepartationCity(), c);
-            Assert.AreEqual(path.First().GetDestinationCity(), e);
+            Assert.AreEqual(path.First().DepartCity, c);
+            Assert.AreEqual(path.First().DestinationCity, e);
             path.RemoveFirst();
             Assert.AreEqual(path.Count(), 0);
         }
@@ -78,11 +78,11 @@ namespace SampleDataflowProject.Tests
         [TestMethod()]
         public void ClosestAirportTest()
         {
-            City a = new City("A");
-            City b = new City("B");
-            City c = new City("C");
-            City d = new City("D");
-            City e = new City("E");
+            var a = new City("A");
+            var b = new City("B");
+            var c = new City("C");
+            var d = new City("D");
+            var e = new City("E");
             a.AddRailwayRoad(b, 1);
             a.AddRailwayRoad(e, 1000);
             b.AddRailwayRoad(d, 2);
@@ -93,19 +93,19 @@ namespace SampleDataflowProject.Tests
             a.AddAirwayRoad(e, 100);
             d.AddAirwayRoad(e, 5);
             Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(a).Count(), 0);
-            Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(b).Last().GetDestinationCity(), d);
-            Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(c).Last().GetDestinationCity(), e);
+            Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(b).Last().DestinationCity, d);
+            Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(c).Last().DestinationCity, e);
             Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(d).Count(), 0);
         }
 
         [TestMethod()]
         public void OnlyAirportsTest()
         {
-            City a = new City("A");
-            City b = new City("B");
-            City c = new City("C");
-            City d = new City("D");
-            City e = new City("E");
+            var a = new City("A");
+            var b = new City("B");
+            var c = new City("C");
+            var d = new City("D");
+            var e = new City("E");
             a.AddRailwayRoad(b, 1);
             a.AddRailwayRoad(e, 1000);
             b.AddRailwayRoad(d, 2);
@@ -115,8 +115,8 @@ namespace SampleDataflowProject.Tests
             d.AddRailwayRoad(c, 3);
             b.AddAirwayRoad(e, 100);
             d.AddAirwayRoad(e, 5);
-            Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(a).Last().GetDestinationCity(), b);
-            Assert.AreEqual(PathSearchAlgorithm.ShortestPath(b, e, PathSearchAlgorithm.SearchingType.OnlyAirway).Last().GetDestinationCity(), e);
+            Assert.AreEqual(PathSearchAlgorithm.ClosestAirport(a).Last().DestinationCity, b);
+            Assert.AreEqual(PathSearchAlgorithm.ShortestPath(b, e, PathSearchAlgorithm.SearchingType.OnlyAirway).Last().DestinationCity, e);
         }
     }
 }

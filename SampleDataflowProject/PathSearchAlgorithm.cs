@@ -10,13 +10,13 @@ namespace SampleDataflowProject
     {
         public enum SearchingType { OnlyAirway, OnlyRailway }
 
-        public static LinkedList<Road> ShortestPath(City departure, City arrival, SearchingType searchingType)
+        public static ICollection<Road> ShortestPath(City departure, City arrival, SearchingType searchingType)
         {
 
             return DijkstraPath(departure, arrival, searchingType);
         }
 
-        public static LinkedList<Road> ClosestAirport(City city, bool isReverseSearch = false)
+        public static ICollection<Road> ClosestAirport(City city, bool isReverseSearch = false)
         {
             Dictionary<City, int> cost = new Dictionary<City, int>();
             Dictionary<City, Road> prevRoad = new Dictionary<City, Road>();
@@ -29,23 +29,23 @@ namespace SampleDataflowProject
             {
                 int minDist = counting.Min(_ => cost[_]);
                 City minCity = counting.First(_ => (cost[_] == minDist));
-                foreach (Road road in isReverseSearch ? minCity.GetRailwayRoadsIn() : minCity.GetRailwayRoadsOut())
+                foreach (Road road in isReverseSearch ? minCity.RailwayRoadsIn : minCity.RailwayRoadsOut)
                 {
-                    City neighbor = isReverseSearch ? road.GetDepartationCity() : road.GetDestinationCity();
+                    City neighbor = isReverseSearch ? road.DepartCity : road.DestinationCity;
                     if (!alreadyCounted.Contains(neighbor))
                     {
                         if (counting.Contains(neighbor))
                         {
-                            if (cost[neighbor] > cost[minCity] + road.GetCost())
+                            if (cost[neighbor] > cost[minCity] + road.Cost)
                             {
-                                cost[neighbor] = cost[minCity] + road.GetCost();
+                                cost[neighbor] = cost[minCity] + road.Cost;
                                 prevRoad[neighbor] = road;
                             }
                         }
                         else
                         {
                             counting.Add(neighbor);
-                            cost[neighbor] = cost[minCity] + road.GetCost();
+                            cost[neighbor] = cost[minCity] + road.Cost;
                             prevRoad[neighbor] = road;
                         }
                     }
@@ -53,7 +53,7 @@ namespace SampleDataflowProject
                 counting.Remove(minCity);
                 alreadyCounted.Add(minCity);
 
-                if (minCity.HasAirport())
+                if (minCity.HasAirport)
                 {
                     LinkedList<Road> result = new LinkedList<Road>();
                     City currentCity = minCity;
@@ -62,12 +62,12 @@ namespace SampleDataflowProject
                         if (isReverseSearch)
                         {
                             result.AddLast(prevRoad[currentCity]);
-                            currentCity = prevRoad[currentCity].GetDestinationCity();
+                            currentCity = prevRoad[currentCity].DestinationCity;
                         }
                         else
                         {
                             result.AddFirst(prevRoad[currentCity]);
-                            currentCity = prevRoad[currentCity].GetDepartationCity();
+                            currentCity = prevRoad[currentCity].DepartCity;
                         }
                         
                     }
@@ -91,23 +91,23 @@ namespace SampleDataflowProject
             {
                 int minDist = counting.Min(city => cost[city]);
                 City minCity = counting.First(city => (cost[city] == minDist));
-                foreach (Road road in (searchingType == SearchingType.OnlyRailway ? minCity.GetRailwayRoadsOut() : minCity.GetAirwayRoadsOut()))
+                foreach (Road road in (searchingType == SearchingType.OnlyRailway ? minCity.RailwayRoadsOut : minCity.AirwayRoadsOut))
                 {
-                    City neighbor = road.GetDestinationCity(); 
+                    City neighbor = road.DestinationCity; 
                     if (!alreadyCounted.Contains(neighbor))
                     {
                         if (counting.Contains(neighbor))
                         {
-                            if (cost[neighbor] > cost[minCity] + road.GetCost())
+                            if (cost[neighbor] > cost[minCity] + road.Cost)
                             {
-                                cost[neighbor] = cost[minCity] + road.GetCost();
+                                cost[neighbor] = cost[minCity] + road.Cost;
                                 prevRoad[neighbor] = road;
                             }
                         }
                         else
                         {
                             counting.Add(neighbor);
-                            cost[neighbor] = cost[minCity] + road.GetCost();
+                            cost[neighbor] = cost[minCity] + road.Cost;
                             prevRoad[neighbor] = road;
                         }
                     }
@@ -122,7 +122,7 @@ namespace SampleDataflowProject
                     while (prevRoad.ContainsKey(currentCity))
                     {
                         result.AddFirst(prevRoad[currentCity]);
-                        currentCity = prevRoad[currentCity].GetDepartationCity();
+                        currentCity = prevRoad[currentCity].DepartCity;
                     }
                     return result;
                 }

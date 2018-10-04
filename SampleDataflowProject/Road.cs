@@ -10,37 +10,17 @@ namespace SampleDataflowProject
     {
         public enum RoadType { Railway, Airway };
 
-        private readonly RoadType roadType;
-        private readonly int cost;
-        private readonly City departCity;
-        private readonly City destinationCity;
+        public RoadType CurrentRoadType { get; private set; }
+        public int Cost { get; private set; }
+        public City DepartCity { get; private set; }
+        public City DestinationCity { get; private set; }
 
         public Road(RoadType roadType, int cost, City departCity, City destinationCity)
         {
-            this.roadType = roadType;
-            this.cost = cost;
-            this.departCity = departCity;
-            this.destinationCity = destinationCity;
-        }
-
-        public RoadType GetRoadType()
-        {
-            return roadType;
-        }
-
-        public City GetDepartationCity()
-        {
-            return departCity;
-        }
-
-        public City GetDestinationCity()
-        {
-            return destinationCity;
-        }
-
-        public int GetCost()
-        {
-            return cost;
+            CurrentRoadType = roadType;
+            Cost = cost;
+            DepartCity = departCity;
+            DestinationCity = destinationCity;
         }
     }
 }

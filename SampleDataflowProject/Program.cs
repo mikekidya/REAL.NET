@@ -9,14 +9,13 @@ namespace SampleDataflowProject
     class Program
     {
         
-
         static void Main(string[] args)
         {
-            City a = new City("A");
-            City b = new City("B");
-            City c = new City("C");
-            City d = new City("D");
-            City e = new City("E");
+            var a = new City("A");
+            var b = new City("B");
+            var c = new City("C");
+            var d = new City("D");
+            var e = new City("E");
             a.AddRailwayRoad(b, 1);
             a.AddRailwayRoad(e, 1000);
             b.AddRailwayRoad(d, 2);
@@ -28,38 +27,38 @@ namespace SampleDataflowProject
             d.AddAirwayRoad(e, 5);
 
             var start = new BroadcastBlock<Tuple<City, City>>(null);
-            var railwayCounting = new TransformBlock<Tuple<City, City>, LinkedList<Road>>(arg =>
+            var railwayCounting = new TransformBlock<Tuple<City, City>, ICollection<Road>>(arg =>
                PathSearchAlgorithm.ShortestPath(arg.Item1, arg.Item2, PathSearchAlgorithm.SearchingType.OnlyRailway));
             var startAirwayCounting = new BroadcastBlock<Tuple<City, City>>(null);
             var departCity = new TransformBlock<Tuple<City, City>, City>(arg => arg.Item1);
             var arrivalCity = new TransformBlock<Tuple<City, City>, City>(arg => arg.Item2);
-            var departAirportAndPath = new TransformBlock<City, Tuple<City, LinkedList<Road>>>(arg => ClosestAirportAndPath(arg, false));
-            var arrivalAirportAndPath = new TransformBlock<City, Tuple<City, LinkedList<Road>>>(arg => ClosestAirportAndPath(arg, true));
-            var departAirport = new TransformBlock<Tuple<City, LinkedList<Road>>, City>(arg => arg.Item1);
-            var arrivalAirport = new TransformBlock<Tuple<City, LinkedList<Road>>, City>(arg => arg.Item1);
-            var departAirportPath = new TransformBlock<Tuple<City, LinkedList<Road>>, LinkedList<Road>>(arg => arg.Item2);
-            var arrivalAirportPath = new TransformBlock<Tuple<City, LinkedList<Road>>, LinkedList<Road>>(arg => arg.Item2);
-            var departAirportBroadcast = new BroadcastBlock<Tuple<City, LinkedList<Road>>>(null);
-            var arrivalAirportBroadcast = new BroadcastBlock<Tuple<City, LinkedList<Road>>>(null);
+            var departAirportAndPath = new TransformBlock<City, Tuple<City, ICollection<Road>>>(arg => ClosestAirportAndPath(arg, false));
+            var arrivalAirportAndPath = new TransformBlock<City, Tuple<City, ICollection<Road>>>(arg => ClosestAirportAndPath(arg, true));
+            var departAirport = new TransformBlock<Tuple<City, ICollection<Road>>, City>(arg => arg.Item1);
+            var arrivalAirport = new TransformBlock<Tuple<City, ICollection<Road>>, City>(arg => arg.Item1);
+            var departAirportPath = new TransformBlock<Tuple<City, ICollection<Road>>, ICollection<Road>>(arg => arg.Item2);
+            var arrivalAirportPath = new TransformBlock<Tuple<City, ICollection<Road>>, ICollection<Road>>(arg => arg.Item2);
+            var departAirportBroadcast = new BroadcastBlock<Tuple<City, ICollection<Road>>>(null);
+            var arrivalAirportBroadcast = new BroadcastBlock<Tuple<City, ICollection<Road>>>(null);
             var airports = new JoinBlock<City, City>();
-            var airwayCounting = new TransformBlock<Tuple<City, City>, LinkedList<Road>>(arg =>
+            var airwayCounting = new TransformBlock<Tuple<City, City>, ICollection<Road>>(arg =>
             {
                 var result = PathSearchAlgorithm.ShortestPath(arg.Item1, arg.Item2, PathSearchAlgorithm.SearchingType.OnlyAirway);
                 return result;
             });
-            var fullAirwayPathArgs = new JoinBlock<LinkedList<Road>, LinkedList<Road>, LinkedList<Road>>();
-            var fullAirwayPath = new TransformBlock<Tuple<LinkedList<Road>, LinkedList<Road>, LinkedList<Road>>, LinkedList<Road>>(arg =>
+            var fullAirwayPathArgs = new JoinBlock<ICollection<Road>, ICollection<Road>, ICollection<Road>>();
+            var fullAirwayPath = new TransformBlock<Tuple<ICollection<Road>, ICollection<Road>, ICollection<Road>>, ICollection<Road>>(arg =>
             {
                 return new LinkedList<Road>(arg.Item1.Concat(arg.Item2.Concat(arg.Item3)));
             });
                 
-            var printPath = new ActionBlock<LinkedList<Road>>(roads =>
+            var printPath = new ActionBlock<ICollection<Road>>(roads =>
             {
                 foreach (Road road in roads)
                 {
-                    Console.Write(road.GetDepartationCity().GetName() + " -> ");
+                    Console.Write(road.DepartCity.Name + " -> ");
                 }
-                Console.WriteLine(roads.Last().GetDestinationCity().GetName());
+                Console.WriteLine(roads.Last().DestinationCity.Name);
             });
 
             start.LinkTo(railwayCounting);
@@ -95,26 +94,22 @@ namespace SampleDataflowProject
 
             start.Post(new Tuple<City, City>(a, e));
 
-            
             Console.ReadKey();
-            
-
-
         }
 
-        static Tuple<City, LinkedList<Road>> ClosestAirportAndPath(City city, bool isReverse)
+        static Tuple<City, ICollection<Road>> ClosestAirportAndPath(City city, bool isReverse)
         {
-            LinkedList<Road> path = PathSearchAlgorithm.ClosestAirport(city, isReverse);
+            ICollection<Road> path = PathSearchAlgorithm.ClosestAirport(city, isReverse);
             City airport;
             if (isReverse)
             {
-                airport = path.Count() > 0 ? path.First().GetDepartationCity() : city;
+                airport = path.Count() > 0 ? path.First().DepartCity : city;
             }
             else
             {
-                airport = path.Count() > 0 ? path.Last().GetDestinationCity() : city;
+                airport = path.Count() > 0 ? path.Last().DestinationCity : city;
             }
-            return new Tuple<City, LinkedList<Road>>(airport, path);
+            return new Tuple<City, ICollection<Road>>(airport, path);
         }
     }
 }
