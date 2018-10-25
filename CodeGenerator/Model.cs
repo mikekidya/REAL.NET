@@ -8,6 +8,6 @@ namespace CodeGenerator
 {
 	public class Model
 	{
-		public string Name = "Admin";
+		public ICollection<Block> Blocks = new LinkedList<Block>();
 	}
 }
