@@ -11,29 +11,24 @@ namespace CodeGenerator
 	{
 		static void Main(string[] args)
 		{
-			Block A = new Block("start", "int");
-			Block B = new Block("transform", "Random");
-			Block C = new Block("end", null);
+			var a = new Block("start", "int");
+			var b = new Block("transform", "Random");
+			var c = new Block("end", null);
 
-			A.ConnectTo(B);
-			B.ConnectTo(C);
-			A.ConnectTo(C);
+			a.ConnectTo(b);
+			b.ConnectTo(c);
+			a.ConnectTo(c);
 
-			Model model = new Model();
-			model.Blocks.Add(A);
-			model.Blocks.Add(B);
-			model.Blocks.Add(C);
+			var model = new Model();
+			model.Blocks.Add(a);
+			model.Blocks.Add(b);
+			model.Blocks.Add(c);
 
-			
 			var engine = EngineFactory.CreatePhysical(System.IO.Path.GetFullPath(@"..\..\"));
-
 			string result = engine.Parse("template.cshtml", model);
-
 			System.IO.File.WriteAllText("out.cs", result);
-
 			//Console.WriteLine(result);
 			//Console.ReadKey();
-			
 		}
 	}
 }
