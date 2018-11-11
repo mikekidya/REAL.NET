@@ -92,6 +92,8 @@
     <Compile Include="ModelBuilders\AirSimMetamodelBuilder.fs" />
     <Compile Include="ModelBuilders\AirSimModelBuilder.fs" />
     <Compile Include="ModelBuilders\CoreMetametamodelBuilder.fs" />
+    <Compile Include="ModelBuilders\DataflowMetamodelBuilder.fs" />
+    <Compile Include="ModelBuilders\DataflowTestModelBuilder.fs" />
     <Compile Include="FacadeLayer.fs" />
     <Compile Include="FacadeLayer\Attribute.fs" />
     <Compile Include="FacadeLayer\Element.fs" />

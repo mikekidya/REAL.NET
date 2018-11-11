@@ -31,6 +31,9 @@ type RepoFactory =
         Metametamodels.AirSimMetamodelBuilder() |> build
         Metametamodels.AirSimModelBuilder() |> build
 
+        Metametamodels.DataflowMetamodelBuilder() |> build
+        Metametamodels.DataflowTestModelBuilder() |> build
+
         new FacadeLayer.Repo(data) :> IRepo
 
     /// Method that returns a new repository populated from a save file.
