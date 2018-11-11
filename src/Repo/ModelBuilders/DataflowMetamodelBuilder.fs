@@ -64,15 +64,16 @@ type DataflowMetamodelBuilder() =
                 edge
 
             let abstractNode = +("AbstractNode", "", true)
-           // let initialNode = +("InitialNode", "View/Pictures/initialBlock.png", false)
-            let finalNode = +("FinalNode", "View/Pictures/finalBlock.png", false)
+            //let initialNode = +("InitialNode", "View/Pictures/initialBlock.png", false)
+            //let finalNode = +("FinalNode", "View/Pictures/finalBlock.png", false)
 
-            let blockNode = +("BlockNode", "View/Pictures/star1.png", false);
+            let blockNode = +("BlockNode", "View/Pictures/rectangle.png", false);
             infrastructure.Element.AddAttribute blockNode "name" "AttributeKind.String" "unnamed"
+            infrastructure.Element.AddAttribute blockNode "output type" "AttributeKind.String" ""
 
             let link = abstractNode ---> (abstractNode, "target", "Link")
 
-            finalNode --|> abstractNode
+            //finalNode --|> abstractNode
             blockNode --|> abstractNode
        
             ()

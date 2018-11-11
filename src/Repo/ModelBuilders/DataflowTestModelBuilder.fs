@@ -14,7 +14,7 @@ type DataflowTestModelBuilder() =
 
             let metamodelAbstractNode = Model.findNode metamodel "AbstractNode"
             //let metamodelInitialNode = Model.findNode metamodel "InitialNode"
-            let metamodelFinalNode = Model.findNode metamodel "FinalNode"
+            //let metamodelFinalNode = Model.findNode metamodel "FinalNode"
             let metamodelBlock = Model.findNode metamodel "BlockNode"
 
             let link = Model.findAssociationWithSource metamodelAbstractNode "target"
@@ -22,9 +22,10 @@ type DataflowTestModelBuilder() =
             let model = repo.CreateModel("DataflowTestModel", metamodel)
 
             //let initialNode = infrastructure.Instantiate model metamodelInitialNode
-            let finalNode = infrastructure.Instantiate model metamodelFinalNode
+            //let finalNode = infrastructure.Instantiate model metamodelFinalNode
 
-            let block = infrastructure.Instantiate model metamodelBlock
+            let block1 = infrastructure.Instantiate model metamodelBlock
+            let block2 = infrastructure.Instantiate model metamodelBlock
 
             let (-->) (src: IElement) dst =
                 let aLink = infrastructure.Instantiate model link :?> IAssociation
@@ -33,6 +34,6 @@ type DataflowTestModelBuilder() =
                 dst
 
             //initialNode --> 
-            block --> finalNode |> ignore
+            block1 --> block2 |> ignore
 
             ()
