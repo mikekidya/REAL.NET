@@ -60,6 +60,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleDataflowProjectTests", "SampleDataflowProjectTests1\SampleDataflowProjectTests.csproj", "{64C31D3E-9A8E-46CF-81CC-433F6448842D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator", "src\TPL.Dataflow\CodeGenerator\CodeGenerator.csproj", "{520C128C-48E1-4891-ACC7-7C4B3B953588}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9E7065A4-BA5E-4752-84BF-54D5C00DB60C} = {9E7065A4-BA5E-4752-84BF-54D5C00DB60C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
