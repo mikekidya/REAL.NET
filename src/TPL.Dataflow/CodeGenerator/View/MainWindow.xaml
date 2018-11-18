@@ -14,7 +14,7 @@
 * limitations under the License. -->
 
 <Window 
-    x:Class="WpfEditor.View.MainWindow" 
+    x:Class="CodeGenerator.View.MainWindow" 
     x:ClassModifier="internal"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -37,7 +37,7 @@
         <CommandBinding Command="SaveAs" CanExecute="OnCanExecuteForAlwaysExecutable" Executed="OnSaveAsExecuted" />
         <CommandBinding Command="Close" CanExecute="OnCanExecuteForAlwaysExecutable" Executed="OnQuitExecuted" />
     </Window.CommandBindings>
-    
+
     <Grid>
         <Grid.Resources>
             <ResourceDictionary>
@@ -132,6 +132,15 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Bottom"
                     Click="ConstraintsButtonClick" Height="26"/>
+
+                <Button
+                    x:Name="generateButton"
+                    Grid.Row="5"
+                    Content="Generate"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Click="GenerateButtonClick"
+                    Height="26" Margin="0,0,0,-26" />
             </Grid>
 
         </DockPanel>

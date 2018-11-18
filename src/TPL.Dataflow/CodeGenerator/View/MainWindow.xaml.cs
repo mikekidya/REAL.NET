@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. */
 
-namespace WpfEditor.View
+namespace CodeGenerator.View
 {
     using System;
     using System.Collections.Generic;
@@ -28,6 +28,7 @@ namespace WpfEditor.View
     using WpfControlsLib.Controls.Scene;
     using WpfControlsLib.Controls.Toolbar;
     using Palette = WpfControlsLib.Controls.Palette.Palette;
+	using RazorLight;
 
     /// <summary>
     /// Main window of the application, launches on application startup.
@@ -229,5 +230,24 @@ namespace WpfEditor.View
                 model.SaveAs(dialog.FileName);
             }
         }
-    }
+
+		private void GenerateButtonClick(object sender, RoutedEventArgs e)
+		{
+			var repoModel = this.model.Repo.Model("DataflowTestModel");
+			var model = ModelConverter.ConvertModelFromRepo(repoModel);
+			var saveDialog = new Microsoft.Win32.SaveFileDialog
+			{
+				DefaultExt = ".cs"
+			};
+			var isFileChosen = saveDialog.ShowDialog();
+			if (isFileChosen == true)
+			{
+				var razorEngine = EngineFactory.CreatePhysical(System.IO.Path.GetFullPath(@"..\..\"));
+				string result = razorEngine.Parse("template.cshtml", model);
+				System.IO.File.WriteAllText(saveDialog.FileName, result);
+			}
+		}
+
+		
+	}
 }
