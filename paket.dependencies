@@ -15,7 +15,6 @@ nuget StyleCop.Analyzers
 nuget System.ValueTuple
 nuget Newtonsoft.Json
 
-
 group Tests
 
 framework: net46
