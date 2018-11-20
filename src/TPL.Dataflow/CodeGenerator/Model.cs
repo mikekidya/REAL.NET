@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CodeGenerator
 {
-	public class Model
-	{
-		public ICollection<Block> Blocks = new LinkedList<Block>();
-	}
+    public class Model
+    {
+        public ICollection<Block> Blocks = new LinkedList<Block>();
+    }
 }

@@ -7,36 +7,36 @@ using System.Threading.Tasks.Dataflow;
 
 namespace UserNamespace
 {
-	class Program
-	{
-		static void Main(string[] args)
-		{
-			@foreach (var block in Model.Blocks)
-			{
-				@Raw("			");
-				@Raw(@block.GetDefinition());
-				@Raw("\n");
-			}
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            @foreach (var block in Model.Blocks)
+            {
+                @Raw("            ");
+                @Raw(@block.GetDefinition());
+                @Raw("\n");
+            }
 
-			@foreach (var block in Model.Blocks)
-			{
-				@foreach (var str in @block.GetAdditionalBlocks())
-				{
-					@Raw("			");
-					@Raw(@str);
-					@Raw("\n");
-				}	
-			}
+            @foreach (var block in Model.Blocks)
+            {
+                @foreach (var str in @block.GetAdditionalBlocks())
+                {
+                    @Raw("            ");
+                    @Raw(@str);
+                    @Raw("\n");
+                }	
+            }
 
-			@foreach (var block in Model.Blocks)
-			{
-				@foreach (var str in @block.GetConnections())
-				{
-					@Raw("			");
-					@Raw(@str);
-					@Raw("\n");
-				}	
-			}
-		}
-	}
+            @foreach (var block in Model.Blocks)
+            {
+                @foreach (var str in @block.GetConnections())
+                {
+                    @Raw("            ");
+                    @Raw(@str);
+                    @Raw("\n");
+                }	
+            }
+        }
+    }
 }
