@@ -28,7 +28,6 @@ namespace CodeGenerator.View
     using WpfControlsLib.Controls.Scene;
     using WpfControlsLib.Controls.Toolbar;
     using Palette = WpfControlsLib.Controls.Palette.Palette;
-    using RazorLight;
 
     /// <summary>
     /// Main window of the application, launches on application startup.
@@ -233,18 +232,16 @@ namespace CodeGenerator.View
 
         private void GenerateButtonClick(object sender, RoutedEventArgs e)
         {
-            var repoModel = this.model.Repo.Model("DataflowTestModel");
-            var model = ModelConverter.ConvertModelFromRepo(repoModel);
             var saveDialog = new Microsoft.Win32.SaveFileDialog
             {
-                DefaultExt = ".cs"
+                DefaultExt = ".cs",
+                Filter = "C# source code|*.cs"
             };
             var isFileChosen = saveDialog.ShowDialog();
             if (isFileChosen == true)
             {
-                var razorEngine = EngineFactory.CreatePhysical(System.IO.Path.GetFullPath(@"..\..\"));
-                string result = razorEngine.Parse("template.cshtml", model);
-                System.IO.File.WriteAllText(saveDialog.FileName, result);
+                var repoModel = this.model.Repo.Model("DataflowTestModel");
+                System.IO.File.WriteAllText(saveDialog.FileName, RazorGenerator.GenerateFromRepoModel(repoModel));
             }
         }
 
