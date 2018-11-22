@@ -9,8 +9,14 @@ namespace CodeGenerator
 {
     using Repo;
 
+    /// <summary>
+    /// Class representing methods for converning Repo model to generator model
+    /// </summary>
     public class ModelConverter
     {
+        /// <summary>
+        /// Converts Repo model to generator model
+        /// </summary>
         public static Model ConvertModelFromRepo(IModel repoModel)
         {
             var generatorModel = new Model();

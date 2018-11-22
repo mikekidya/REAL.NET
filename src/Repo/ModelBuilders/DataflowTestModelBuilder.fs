@@ -4,7 +4,7 @@ open Repo.DataLayer
 open Repo.CoreSemanticLayer
 open Repo.InfrastructureSemanticLayer
 
-/// Initializes repository with test model conforming to Robots Metamodel, actual program that can be written by end-user.
+/// Initializes repository with test model conforming to Dataflow Metamodel, actual program that can be written by end-user.
 type DataflowTestModelBuilder() =
     interface IModelBuilder with
         member this.Build(repo: IRepo): unit =
@@ -13,16 +13,11 @@ type DataflowTestModelBuilder() =
             let infrastructureMetamodel = infrastructure.Metamodel.Model
 
             let metamodelAbstractNode = Model.findNode metamodel "AbstractNode"
-            //let metamodelInitialNode = Model.findNode metamodel "InitialNode"
-            //let metamodelFinalNode = Model.findNode metamodel "FinalNode"
             let metamodelBlock = Model.findNode metamodel "BlockNode"
 
             let link = Model.findAssociationWithSource metamodelAbstractNode "target"
 
             let model = repo.CreateModel("DataflowTestModel", metamodel)
-
-            //let initialNode = infrastructure.Instantiate model metamodelInitialNode
-            //let finalNode = infrastructure.Instantiate model metamodelFinalNode
 
             let block1 = infrastructure.Instantiate model metamodelBlock
             let block2 = infrastructure.Instantiate model metamodelBlock
@@ -33,7 +28,6 @@ type DataflowTestModelBuilder() =
                 aLink.Target <- Some dst
                 dst
 
-            //initialNode --> 
             block1 --> block2 |> ignore
 
             ()

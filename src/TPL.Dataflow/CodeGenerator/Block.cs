@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace CodeGenerator
 {
+    /// <summary>
+    /// Class for representing blocks in astract model
+    /// </summary>
     public class Block
     {
         private IList<Block> inputBlocks = new List<Block>();
@@ -17,6 +20,10 @@ namespace CodeGenerator
             this.OutputType = outputType;
         }
 
+        /// <summary>
+        /// Adds connection to other block
+        /// </summary>
+        /// <param name="otherBlock">Block which will be connected to this one</param>
         public void ConnectTo(Block otherBlock)
         {
             this.outputBlocks.Add(otherBlock);
@@ -36,6 +43,9 @@ namespace CodeGenerator
             return "TransformBlock";
         }
 
+        /// <summary>
+        /// Returns definition presented as C# source code
+        /// </summary>
         public string GetDefinition()
         {
             string result = $"var {Name} = new {BlockType()}<";
@@ -72,6 +82,9 @@ namespace CodeGenerator
 
         public bool HasManyOutputs() => outputBlocks.Count > 1;
 
+        /// <summary>
+        /// Returns the collection of additional wpappers blocks definitions
+        /// </summary>
         public ICollection<string> GetAdditionalBlocks()
         {
             ICollection<string> result = new LinkedList<string>();
@@ -97,6 +110,9 @@ namespace CodeGenerator
             
         }
 
+        /// <summary>
+        /// Returns the collection of connections of blocks and its wrappers
+        /// </summary>
         public ICollection<string> GetConnections()
         {
             ICollection<string> result = new LinkedList<string>();

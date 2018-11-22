@@ -4,7 +4,7 @@ open Repo
 open Repo.DataLayer
 open Repo.InfrastructureSemanticLayer
 
-/// Initializes repository with Robots Metamodel, first testing metamodel of a real language.
+/// Initializes repository with Dataflow Metamodel, first testing metamodel of a real language.
 type DataflowMetamodelBuilder() =
     interface IModelBuilder with
         member this.Build(repo: IRepo): unit =
@@ -64,8 +64,6 @@ type DataflowMetamodelBuilder() =
                 edge
 
             let abstractNode = +("AbstractNode", "", true)
-            //let initialNode = +("InitialNode", "View/Pictures/initialBlock.png", false)
-            //let finalNode = +("FinalNode", "View/Pictures/finalBlock.png", false)
 
             let blockNode = +("BlockNode", "View/Pictures/rectangle.png", false);
             infrastructure.Element.AddAttribute blockNode "name" "AttributeKind.String" "unnamed"
@@ -73,7 +71,6 @@ type DataflowMetamodelBuilder() =
 
             let link = abstractNode ---> (abstractNode, "target", "Link")
 
-            //finalNode --|> abstractNode
             blockNode --|> abstractNode
        
             ()
