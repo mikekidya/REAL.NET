@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenerationTest.cs" />
     <Compile Include="SampleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\..\SampleDataflowProject\SampleDataflowProject.csproj">
       <Project>{ff4cda33-a1e3-4019-b887-6218b4bff823}</Project>
       <Name>SampleDataflowProject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\TPL.Dataflow\CodeGenerator\CodeGenerator.csproj">
+      <Project>{520c128c-48e1-4891-acc7-7c4b3b953588}</Project>
+      <Name>CodeGenerator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

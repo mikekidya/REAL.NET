@@ -3,17 +3,16 @@ using Repo;
 
 namespace CodeGenerator
 {
-    class RazorGenerator
+    public class RazorGenerator
     {
         public static string GenerateFromRepoModel(IModel repoModel)
         {
             var model = ModelConverter.ConvertModelFromRepo(repoModel);
-            /*var razorEngine = new RazorLightEngineBuilder()
-                .UseFilesystemProject(System.IO.Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory))
-                .UseMemoryCachingProvider()
-                .Build();
+            return GenerateFromModel(model);
+        }
 
-            string result = razorEngine.CompileRenderAsync("template.cshtml", model).Result;*/
+        public static string GenerateFromModel(Model model)
+        {
             var razorEngine = EngineFactory.CreatePhysical(System.IO.Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory));
             var result = razorEngine.Parse("template.cshtml", model);
             return result;
