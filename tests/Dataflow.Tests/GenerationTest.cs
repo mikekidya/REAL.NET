@@ -22,6 +22,8 @@ namespace Dataflow.Tests
             model.Blocks.Add(aBlock);
             model.Blocks.Add(bBlock);
 
+			Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+
             var generatedText = RazorGenerator.GenerateFromModel(model);
         }
     }
