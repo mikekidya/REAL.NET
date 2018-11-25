@@ -7,15 +7,9 @@ nuget FSharp.Core redirects: force
 nuget GraphX
 nuget Microsoft.TPL.Dataflow
 nuget Microsoft.Msagl.GraphViewerGDI 1.0.2
+nuget System.ValueTuple
 nuget RazorLight 1.1
 nuget Microsoft.AspNetCore.Razor 1.1.1
-nuget Microsoft.AspNetCore.Html.Abstractions 1.1.1.0
-nuget Microsoft.Extensions.FileProviders.Physical 1.1.0.0
-nuget Microsoft.Extensions.FileProviders.Abstractions 1.1.0.0
-nuget Microsoft.Extensions.Primitives 1.1.0.0
-nuget Microsoft.Extensions.FileSystemGlobbing 1.1.0.0
-nuget Microsoft.Extensions.Caching.Memory 1.1.1.0
-nuget Microsoft.Extensions.Caching.Abstractions 1.1.1
 nuget StyleCop.Analyzers
 nuget Newtonsoft.Json
 
@@ -27,15 +21,9 @@ source https://api.nuget.org/v3/index.json
 nuget NSubstitute
 nuget NUnit3TestAdapter
 nuget FsUnit
+nuget System.ValueTuple
 nuget RazorLight 1.1
 nuget Microsoft.AspNetCore.Razor 1.1.1
-nuget Microsoft.AspNetCore.Html.Abstractions 1.1.1.0
-nuget Microsoft.Extensions.FileProviders.Physical 1.1.0.0
-nuget Microsoft.Extensions.FileProviders.Abstractions 1.1.0.0
-nuget Microsoft.Extensions.Primitives 1.1.0.0
-nuget Microsoft.Extensions.FileSystemGlobbing 1.1.0.0
-nuget Microsoft.Extensions.Caching.Memory 1.1.1.0
-nuget Microsoft.Extensions.Caching.Abstractions 1.1.1
 
 group TestRunners
 
