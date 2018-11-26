@@ -23,7 +23,7 @@ namespace CodeGenerator
             foreach (var node in repoModel.Nodes)
             {
                 string name = "";
-                string output_type = "";
+                string outputType = "";
                 foreach (var attribute in node.Attributes)
                 {
                     switch (attribute.Name)
@@ -32,41 +32,29 @@ namespace CodeGenerator
                             name = attribute.StringValue;
                             break;
                         case "output type":
-                            output_type = attribute.StringValue;
+                            outputType = attribute.StringValue;
                             break;
                     }
                 }
-                var block = new Block(name, output_type);
+                if (outputType == "" || outputType == "null")
+                {
+                    outputType = null;
+                }
+                var block = new Block(name, outputType, node);
                 generatorModel.Blocks.Add(block);
             }
 
             foreach (var edge in repoModel.Edges)
             {
-                string outputBlockName = "";
-                string inputBlockName = "";
-                foreach (var attribute in edge.From.Attributes)
-                {
-                    if (attribute.Name == "name")
-                    {
-                        outputBlockName = attribute.StringValue;
-                    }
-                }
-                foreach (var attribute in edge.To.Attributes)
-                {
-                    if (attribute.Name == "name")
-                    {
-                        inputBlockName = attribute.StringValue;
-                    }
-                }
                 Block inputBlock = null;
                 Block outputBlock = null;
                 foreach (var block in generatorModel.Blocks)
                 {
-                    if (block.Name == outputBlockName)
+                    if (block.GetRepoNode().Equals(edge.From))
                     {
                         outputBlock = block;
                     }
-                    if (block.Name == inputBlockName)
+                    if (block.GetRepoNode().Equals(edge.To))
                     {
                         inputBlock = block;
                     }

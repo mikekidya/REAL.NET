@@ -56,6 +56,10 @@
       <Project>{ff4cda33-a1e3-4019-b887-6218b4bff823}</Project>
       <Name>SampleDataflowProject</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Repo\Repo.fsproj">
+      <Project>{9e7065a4-ba5e-4752-84bf-54d5c00db60c}</Project>
+      <Name>Repo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\TPL.Dataflow\CodeGenerator\CodeGenerator.csproj">
       <Project>{520c128c-48e1-4891-acc7-7c4b3b953588}</Project>
       <Name>CodeGenerator</Name>

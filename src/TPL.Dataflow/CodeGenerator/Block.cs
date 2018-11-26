@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Repo;
 
 namespace CodeGenerator
 {
@@ -10,14 +11,30 @@ namespace CodeGenerator
     {
         private IList<Block> inputBlocks = new List<Block>();
         private IList<Block> outputBlocks = new List<Block>();
+        private readonly INode repoNode = null;
 
         public string Name { get; set; }
         public string OutputType { get; private set; }
 
-        public Block(string name, string outputType)
+        /// <summary>
+        /// Creates block with given name and ounput type
+        /// </summary>
+        /// <param name="name">Name of the block</param>
+        /// <param name="outputType">(Optional argumant) Output type of block or "null" if block has no output</param>
+        /// <param name="repoNode">(Optional argument) Reference to INode in repo</param>
+        public Block(string name, string outputType = null, INode repoNode = null)
         {
             this.Name = name;
             this.OutputType = outputType;
+            this.repoNode = repoNode;
+        }
+
+        /// <summary>
+        /// Returns the INode referenced to this block
+        /// </summary>
+        public INode GetRepoNode()
+        {
+            return repoNode;
         }
 
         /// <summary>

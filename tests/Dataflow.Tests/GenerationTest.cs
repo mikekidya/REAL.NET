@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CodeGenerator;
 using NSubstitute;
 using NUnit.Framework;
+using Repo;
 
 namespace Dataflow.Tests
 {
