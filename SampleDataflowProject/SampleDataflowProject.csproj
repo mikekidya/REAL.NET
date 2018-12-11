@@ -44,7 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutomaticallyWrittenPrinter.cs" />
     <Compile Include="City.cs" />
+    <Compile Include="ManuallyWrittenPrinter.cs" />
+    <Compile Include="ISamplePathPrinter.cs" />
     <Compile Include="PathSearchAlgorithm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
