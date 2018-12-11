@@ -84,7 +84,7 @@ namespace CodeGenerator
                 }
                 result += ">";
             }
-            if (inputBlocks.Count * outputBlocks.Count > 0)
+            if (inputBlocks.Count > 0 && OutputType != "null")
             {
                 result += ", ";
             }
