@@ -26,6 +26,10 @@ namespace CodeGenerator
         {
             this.Name = name;
             this.OutputType = outputType;
+            if (outputType == "" || outputType == "null")
+            {
+                this.OutputType = null;
+            }
             this.repoNode = repoNode;
         }
 
@@ -84,7 +88,7 @@ namespace CodeGenerator
                 }
                 result += ">";
             }
-            if (inputBlocks.Count > 0 && OutputType != "null")
+            if (inputBlocks.Count > 0 && OutputType != null)
             {
                 result += ", ";
             }
