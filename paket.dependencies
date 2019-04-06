@@ -1,4 +1,4 @@
-framework: net46
+framework: net472
 source https://api.nuget.org/v3/index.json
 
 clitool dotnet-fake
@@ -6,30 +6,28 @@ clitool dotnet-fake
 nuget FSharp.Core redirects: force
 nuget GraphX
 nuget Microsoft.TPL.Dataflow
-nuget QuickGraphPCL 3.6.61114.2
-nuget Microsoft.Msagl 1.0.2
-nuget Microsoft.Msagl.Drawing 1.0.2
 nuget Microsoft.Msagl.GraphViewerGDI 1.0.2
-nuget RazorLight
-nuget StyleCop.Analyzers
 nuget System.ValueTuple
+nuget RazorLight 1.1
+nuget Microsoft.AspNetCore.Razor 1.1.1
+nuget StyleCop.Analyzers
 nuget Newtonsoft.Json
-
 
 group Tests
 
-framework: net46
+framework: net472
 source https://api.nuget.org/v3/index.json
 
 nuget NSubstitute
-nuget NUnit redirects: force
 nuget NUnit3TestAdapter
 nuget FsUnit
-
+nuget System.ValueTuple
+nuget RazorLight 1.1
+nuget Microsoft.AspNetCore.Razor 1.1.1
 
 group TestRunners
 
-framework: net46
+framework: net472
 source https://api.nuget.org/v3/index.json
 
 nuget NUnit.Console
@@ -46,4 +44,3 @@ nuget Fake.Core.ReleaseNotes
 nuget Fake.DotNet.AssemblyInfoFile
 nuget Fake.DotNet.MsBuild
 nuget Fake.DotNet.Testing.NUnit
-nuget Fake.IO.FileSystem

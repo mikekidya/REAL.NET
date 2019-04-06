@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace CodeGenerator
 {
-	public class Model
-	{
-		public ICollection<Block> Blocks = new LinkedList<Block>();
-	}
+    /// <summary>
+    /// Class representing abstract model for generation
+    /// </summary>
+    public class Model
+    {
+        public ICollection<Block> Blocks = new LinkedList<Block>();
+    }
 }
