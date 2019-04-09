@@ -112,6 +112,12 @@
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Web|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Web</OutputPath>
+    <DefineConstants></DefineConstants>
+    <PlatformTarget></PlatformTarget>
+  </PropertyGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.1'">
       <ItemGroup>

@@ -1,20 +1,21 @@
 version 5.198.0
 
-framework: net461
+framework: netstandard2.0
 source https://api.nuget.org/v3/index.json
 
 clitool dotnet-fake
 
 nuget FSharp.Core redirects: force
 nuget GraphX
+nuget Microsoft.AspNetCore
 nuget QuickGraphPCL 3.6.61114.2
 nuget Microsoft.Msagl 1.0.2
 nuget Microsoft.Msagl.Drawing 1.0.2
 nuget Microsoft.Msagl.GraphViewerGDI 1.0.2
 nuget StyleCop.Analyzers
 nuget System.ValueTuple
-nuget Newtonsoft.Json
 nuget System.Xml.XmlDocument
+nuget Newtonsoft.Json redirects: force
 
 
 group Tests
