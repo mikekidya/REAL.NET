@@ -5,6 +5,9 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="paket.lock" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Properties\AssemblyInternalsVisibleTo.fs" />
     <Compile Include="Exceptions.fs" />
@@ -42,9 +45,7 @@
     <Compile Include="FacadeLayer\Repo.fs" />
     <Compile Include="RepoFactory.fs" />
     <Content Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="paket.lock" />
+    <None Include="paket.references" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
