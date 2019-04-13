@@ -1,11 +1,13 @@
 version 5.198.0
 
-framework: netstandard2.0
+framework: auto-detect
 source https://api.nuget.org/v3/index.json
 
 clitool dotnet-fake
 
 nuget FSharp.Core redirects: force
+nuget automapper
+nuget AutoMapper.Extensions.Microsoft.DependencyInjection
 nuget GraphX
 nuget Microsoft.AspNetCore
 nuget QuickGraphPCL 3.6.61114.2
