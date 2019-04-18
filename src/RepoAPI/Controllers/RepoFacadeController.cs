@@ -27,12 +27,6 @@ namespace RepoAPI.Controllers
             return models.ToList().ConvertAll<string>((model) => model.Name);
         }
 
-        [HttpGet("models/{modelName}/isVisible")]
-        public ActionResult<bool> IsModelVisible(string modelName)
-        {
-            return RepoContainer.CurrentRepo().Model(modelName).IsVisible;
-        }
-
         [HttpGet("models/{modelName}")]
         public ActionResult<Model> Model(string modelName)
         {
