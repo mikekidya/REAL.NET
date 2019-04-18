@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Repo;
 using RepoAPI.Models;
+using System.Linq;
 
 namespace RepoAPI
 {
@@ -8,6 +9,9 @@ namespace RepoAPI
     {
         public AutomapperProfile()
         {
+
+            CreateMap<INode, Node>();
+
             CreateMap<IModel, Model>()
                 .ForMember(x => x.MetamodelName, x => x.MapFrom(y => y.Metamodel.Name));
         }
