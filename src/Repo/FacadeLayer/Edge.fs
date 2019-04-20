@@ -15,7 +15,6 @@
 namespace Repo.FacadeLayer
 
 open Repo
-open Repo.Visual
 
 /// Implementation of edge wrapper.
 type Edge
@@ -24,10 +23,11 @@ type Edge
         element: DataLayer.IEdge,
         elementRepository: IElementRepository,
         attributeRepository: AttributeRepository,
+        id: int,
         info: IVisualEdgeInfo
     ) =
 
-    inherit Element(infrastructure, element, elementRepository, attributeRepository)
+    inherit Element(infrastructure, element, elementRepository, attributeRepository, id)
 
     let mutable visualInfo = info
 
