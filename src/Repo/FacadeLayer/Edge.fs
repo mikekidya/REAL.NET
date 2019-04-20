@@ -22,10 +22,11 @@ type Edge
         infrastructure: InfrastructureSemanticLayer.InfrastructureSemantic,
         element: DataLayer.IEdge,
         elementRepository: IElementRepository,
-        attributeRepository: AttributeRepository
+        attributeRepository: AttributeRepository,
+        id: int
     ) =
 
-    inherit Element(infrastructure, element, elementRepository, attributeRepository)
+    inherit Element(infrastructure, element, elementRepository, attributeRepository, id)
 
     interface IEdge with
         member this.From

@@ -1,8 +1,9 @@
 ﻿using System;
 namespace RepoAPI.Models
 {
-    public class Node
+    public class Element
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

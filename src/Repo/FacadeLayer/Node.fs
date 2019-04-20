@@ -23,8 +23,9 @@ type Node
         infrastructure: InfrastructureSemanticLayer.InfrastructureSemantic,
         element: DataLayer.INode,
         elementRepository: IElementRepository,
-        attributeRepository: AttributeRepository
+        attributeRepository: AttributeRepository,
+        id: int
     ) =
 
-    inherit Element(infrastructure, element, elementRepository, attributeRepository)
+    inherit Element(infrastructure, element, elementRepository, attributeRepository, id)
     interface INode
