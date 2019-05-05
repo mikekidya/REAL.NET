@@ -89,6 +89,10 @@ namespace RepoAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Removes model from repository.
+        /// </summary>
+        /// <param name="modelName">Model name.</param>
         [HttpDelete("model/{modelName}")]
         public void DeleteModel(string modelName)
         {
@@ -99,6 +103,10 @@ namespace RepoAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Saves repository into file.
+        /// </summary>
+        /// <param name="path">Path of the file./param>
         [HttpPost("save/{path}")]
         public void SaveRepo(string path)
         {
@@ -108,6 +116,12 @@ namespace RepoAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates new element in model by its parent.
+        /// </summary>
+        /// <returns>The element.</returns>
+        /// <param name="modelName">Model name.</param>
+        /// <param name="parentId">Parent identifier.</param>
         [HttpPost("model/{modelName}/element/create/{parentId}")]
         public ActionResult<int> CreateElement(string modelName, int parentId)
         {
