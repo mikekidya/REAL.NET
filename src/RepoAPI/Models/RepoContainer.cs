@@ -4,7 +4,7 @@ namespace RepoAPI.Models
 {
     public static class RepoContainer
     {
-        public static IRepo repo { get; private set; }
+        private static IRepo repo;
 
         public static void Create()
         {
