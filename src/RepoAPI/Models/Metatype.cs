@@ -1,8 +1,9 @@
 ﻿using System;
 namespace RepoAPI.Models
 {
-    public class Metatype
+    public enum Metatype
     {
-        public int Value { get; set; }
+        Node = 0, 
+        Edge = 1
     }
 }
