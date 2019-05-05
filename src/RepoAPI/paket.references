@@ -2,3 +2,4 @@ Newtonsoft.Json
 FSharp.Core
 automapper
 AutoMapper.Extensions.Microsoft.DependencyInjection
+Swashbuckle.AspNetCore
