@@ -15,6 +15,7 @@ nuget Microsoft.Msagl 1.0.2
 nuget Microsoft.Msagl.Drawing 1.0.2
 nuget Microsoft.Msagl.GraphViewerGDI 1.0.2
 nuget StyleCop.Analyzers
+nuget Swashbuckle.AspNetCore
 nuget System.ValueTuple
 nuget Newtonsoft.Json redirects: force
 
