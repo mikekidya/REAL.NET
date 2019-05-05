@@ -9,7 +9,9 @@ namespace RepoAPI
     {
         public AutomapperProfile()
         {
-            CreateMap<IAttribute, Attribute>();
+            CreateMap<Repo.Metatype, Models.Metatype>().ReverseMap();
+            CreateMap<Repo.AttributeKind, Models.AttributeKind>().ReverseMap();
+            CreateMap<IAttribute, Attribute>().ReverseMap();
             CreateMap<IElement, ElementInfo>();
             CreateMap<IElement, Element>();
             CreateMap<INode, Node>();
