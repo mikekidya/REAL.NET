@@ -106,7 +106,7 @@ namespace RepoAPI.Controllers
         /// <summary>
         /// Saves repository into file.
         /// </summary>
-        /// <param name="path">Path of the file./param>
+        /// <param name="path">Path of the file.</param>
         [HttpPost("save/{path}")]
         public void SaveRepo(string path)
         {
