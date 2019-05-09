@@ -52,15 +52,16 @@
 
         for (var i = 0; i < edgesCount; i++) {
             var edge = JSON.parse(requestSmth('GET', '/api/Element/AirSimModel/' + model.edges[i].id + '/asEdge'));
-            var from = [0, 0, 0];
-            var to = [0, 0, 0];
+            var from = null;
+            var to = null;
             for (var j = 0; j < nodesCount; j++) {
-                if (positions[j][0] == edge.from.id) from = positions[j];
-                if (positions[j][0] == edge.to.id) to = positions[j];
+                if ((edge.from != null) && (positions[j][0] == edge.from.id)) from = positions[j];
+                if ((edge.to != null) && (positions[j][0] == edge.to.id)) to = positions[j];
             }
             console.log(from);
             console.log(to);
-            two.makeLine(from[1], from[2], to[1], to[2]);
+            if ((from != null) && (to != null))
+                two.makeLine(from[1], from[2], to[1], to[2]);
         }
 
         two.update();</script>
@@ -142,32 +143,34 @@
 
         var requestNodes = new XMLHttpRequest();
 
-        requestNodes.open('GET', '/api/Model/AirSimModel', false)
-        requestNodes.onload = function () {
-            // Begin accessing JSON data here
-            var data = JSON.parse(this.response);
-            if (requestNodes.status >= 200 && requestNodes.status < 400) {
-                fill(data.nodes, 'edgeFromSelect');
-                fill(data.nodes, 'edgeToSelect');
-            } else {
-                console.log('error')
-            }
-        }
-        requestNodes.send();
+        fill(JSON.parse(requestSmth('GET', "/api/Model/AirSimModel")).nodes, "edgeFromSelect");
+        fill(JSON.parse(requestSmth('GET', "/api/Model/AirSimModel")).nodes, "edgeToSelect");
+        fill(JSON.parse(requestSmth('GET', "/api/Model/AirSimMetamodel")).nodes, "edgeTypeSelect");
+        </script>
 
-        requestTypes = new XMLHttpRequest();
-        requestTypes.open('GET', '/api/Model/AirSimMetamodel', false)
-        requestTypes.onload = function () {
-            // Begin accessing JSON data here
-            var data = JSON.parse(this.response);
-            if (requestTypes.status >= 200 && requestTypes.status < 400) {
-                fill(data.edges, 'edgeTypeSelect');
-            } else {
-                console.log('error')
-            }
-        }
-        requestTypes.send();</script>
+    </FORM>
 
+    <!-- Remove element -->
+    <FORM name="Delete">
+
+        Remove element:
+
+        <select id="rmElementsSelect" size="1">
+            <option disabled>Choose element</option>
+        </select>
+
+        <input type="button" value=Add onClick="removeElement()">
+
+        <script type="text/javascript">function removeElement() {
+                var e = document.getElementById("rmElementsSelect");
+                var elem = e.options[e.selectedIndex].data;
+                var url = "/api/Element/AirSimModel/" + elem.id;
+                requestSmth('DELETE', url);
+                document.location.reload(true);
+            }
+
+            var requestPrototypeNodes = new XMLHttpRequest();
+            fill(JSON.parse(requestSmth('GET', "/api/Model/AirSimModel")).elements, "rmElementsSelect");</script>
     </FORM>
 
     <!-- Attributes controller -->
