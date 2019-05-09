@@ -70,7 +70,6 @@ namespace RepoAPI.Controllers
         {
             lock (Locker.obj)
             {
-                //throw new NullReferenceException();
                 IModel meta = GetModelFromRepo(modelName).Metamodel;
                 IElement parentElement = GetElementFromRepo(meta.Name, parentId);
                 IElement result = GetModelFromRepo(modelName).CreateElement(parentElement);
@@ -126,72 +125,6 @@ namespace RepoAPI.Controllers
             }
         }
 
-
-        /// <summary>
-        /// Adds the attribute into element.
-        /// </summary>
-        /// <param name="modelName">Model name.</param>
-        /// <param name="elementId">Element identifier.</param>
-        /// <param name="attributeName">Attribute name.</param>
-        /// <param name="attributeKind">Attribute kind.</param>
-        /// <param name="defaultValue">Default value.</param>
-        [HttpPost("{modelName}/{elementId}/attribute/{attributeName}/{attributeKind}/{defaultValue}")]
-        public void AddAttribute(string modelName, int elementId,
-            string attributeName, Models.AttributeKind attributeKind, string defaultValue)
-        {
-            lock (Locker.obj)
-            {
-                GetElementFromRepo(modelName, elementId).AddAttribute(
-                    attributeName,
-                    _mapper.Map<Repo.AttributeKind>(attributeKind),
-                    defaultValue);
-            }
-        }
-
-        /// <summary>
-        /// Changes the attribute value.
-        /// </summary>
-        /// <param name="modelName">Model name.</param>
-        /// <param name="elementId">Element identifier.</param>
-        /// <param name="attributeName">Attribute name.</param>
-        /// <param name="newValue">New value.</param>
-        [HttpPut("{modelName}/{elementId}/attribute/{attributeName}/value/{newValue}")]
-        public void ChangeAttributeValue(string modelName, int elementId,
-            string attributeName, string newValue)
-        {
-            lock (Locker.obj)
-            {
-                //var infrastructure = new InfrastructureSemantic(RepoContainer.CurrentRepo());
-                //var elem = GetElementFromRepo(modelName, elementId);
-                //infrastructure.Element.SetAttributeValue(elem, attributeName, newValue);
-                GetElementFromRepo(modelName, elementId)
-                    .Attributes
-                    .Where(attribute => (attribute.Name == attributeName))
-                    .First()
-                    .StringValue = newValue;
-            }
-        }
-
-        /// <summary>
-        /// Changes the attribute reference. (Not supported in current version)
-        /// </summary>
-        /// <param name="modelName">Model name.</param>
-        /// <param name="elementId">Element identifier.</param>
-        /// <param name="attributeName">Attribute name.</param>
-        /// <param name="newReference">New reference element identifier.</param>
-        [HttpPut("{modelName}/{elementId}/attribute/{attributeName}/reference/{newReference}")]
-        public void ChangeAttributeReference(string modelName, int elementId,
-            string attributeName, int newReference)
-        {
-            lock (Locker.obj)
-            {
-                GetElementFromRepo(modelName, elementId)
-                    .Attributes
-                    .Where(attribute => (attribute.Name == attributeName))
-                    .First()
-                    .ReferenceValue = GetElementFromRepo(modelName, newReference);
-            }
-        }
 
         /// <summary>
         /// Removes the element from model.

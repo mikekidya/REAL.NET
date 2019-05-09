@@ -1,0 +1,244 @@
+<HTML>
+  <HEAD>
+    <TITLE>API Sample Editor</TITLE>
+    <script type="text/javascript" src="two.js"></script>
+    <script type="text/javascript">
+        function fill(options, id) {
+            var select = document.getElementById(id);
+            for (var i = 0; i < options.length; i++) {
+                var opt = options[i];
+                var el = document.createElement("option");
+                el.textContent = opt.id + " " + opt.name;
+                el.data = opt;
+                select.appendChild(el);
+            }
+        }
+
+        function requestSmth(type, url) {
+            var postRequest = new XMLHttpRequest();
+            postRequest.open(type, url, false);
+            var result;
+            postRequest.onload = function () {
+                result = this.response;
+            }
+            postRequest.send();
+            return result;
+        }
+    </script>
+
+  </HEAD>
+  <BODY>
+    <h1> Sample Editor </h1>
+
+    <h3> AirSim </h3>
+    
+
+    <script type="text/javascript">var elem = document.body;
+        var params = { width: 800, height: 300 };
+        var two = new Two(params).appendTo(elem);
+
+        var model = JSON.parse(requestSmth('GET', '/api/Model/AirSimModel'));
+        const nodesCount = model.nodes.length;
+        const edgesCount = model.edges.length;
+        var positions = [];
+
+        for (var i = 0; i < nodesCount; i++) {
+            var x = 400 + 350 * Math.cos(2 * Math.PI / nodesCount * i);
+            var y = 150 + 100 * Math.sin(2 * Math.PI / nodesCount * i);
+            positions.push([model.nodes[i].id, x, y])
+            var text = two.makeText(model.nodes[i].id + model.nodes[i].name, x, y);
+            text.fill = "#FF8000"
+        }
+
+        for (var i = 0; i < edgesCount; i++) {
+            var edge = JSON.parse(requestSmth('GET', '/api/Element/AirSimModel/' + model.edges[i].id + '/asEdge'));
+            var from = [0, 0, 0];
+            var to = [0, 0, 0];
+            for (var j = 0; j < nodesCount; j++) {
+                if (positions[j][0] == edge.from.id) from = positions[j];
+                if (positions[j][0] == edge.to.id) to = positions[j];
+            }
+            console.log(from);
+            console.log(to);
+            two.makeLine(from[1], from[2], to[1], to[2]);
+        }
+
+        two.update();</script>
+
+  
+
+    <!-- Add node button and select -->
+    <FORM name = "AddNode">
+
+      Add new node: 
+
+    <select id="nodePrototypeSelect" size="1">
+      <option disabled>Choose prototype</option>
+    </select>
+
+    <input type="button" value=Add onClick="addNewElement()" >
+
+    <script type="text/javascript">
+        function addNewElement() {
+            var e = document.getElementById("nodePrototypeSelect");
+            var prototype = e.options[e.selectedIndex].data;
+            var url = "/api/Element/AirSimModel/" + prototype.id;
+            requestSmth('POST', url);
+            document.location.reload(true);
+        }
+
+        var requestPrototypeNodes = new XMLHttpRequest();
+
+        requestPrototypeNodes.open('GET', '/api/Model/AirSimMetamodel', false)
+        requestPrototypeNodes.onload = function () {
+            // Begin accessing JSON data here
+            var data = JSON.parse(this.response);
+            if (requestPrototypeNodes.status >= 200 && requestPrototypeNodes.status < 400) {
+                fill(data.nodes, 'nodePrototypeSelect');
+            } else {
+                console.log('error')
+            }
+        }
+        requestPrototypeNodes.send();</script>
+    </FORM>
+
+    <!-- Add edge button and select -->
+    <FORM name = "AddEdge">
+
+      Add new edge:
+
+    <select id="edgeTypeSelect" size="1">
+        <option disabled>Choose type</option>
+    </select>
+    
+    <select id="edgeFromSelect" size="1">
+      <option disabled>Choose from</option>
+    </select>
+
+    <select id="edgeToSelect" size="1">
+      <option disabled>Choose to</option>
+    </select>
+
+    <input type="button" value=Add onClick="addNewEdge()">
+
+    <script type="text/javascript">function addNewEdge() {
+            var e = document.getElementById("edgeTypeSelect");
+            var prototype = e.options[e.selectedIndex].data;
+            var url = "/api/Element/AirSimModel/" + prototype.id;
+            var newEdgeNum = JSON.parse(requestSmth('POST', url));
+
+            var from_e = document.getElementById("edgeFromSelect");
+            var from = from_e.options[from_e.selectedIndex].data;
+            var url = "/api/Element/AirSimModel/" + newEdgeNum + "/from/" + from.id;
+            requestSmth('PUT', url);
+
+            var to_e = document.getElementById("edgeToSelect");
+            var to = to_e.options[to_e.selectedIndex].data;
+            var url = "/api/Element/AirSimModel/" + newEdgeNum + "/to/" + to.id;
+            requestSmth('PUT', url);
+
+            document.location.reload(true);
+        }
+
+        var requestNodes = new XMLHttpRequest();
+
+        requestNodes.open('GET', '/api/Model/AirSimModel', false)
+        requestNodes.onload = function () {
+            // Begin accessing JSON data here
+            var data = JSON.parse(this.response);
+            if (requestNodes.status >= 200 && requestNodes.status < 400) {
+                fill(data.nodes, 'edgeFromSelect');
+                fill(data.nodes, 'edgeToSelect');
+            } else {
+                console.log('error')
+            }
+        }
+        requestNodes.send();
+
+        requestTypes = new XMLHttpRequest();
+        requestTypes.open('GET', '/api/Model/AirSimMetamodel', false)
+        requestTypes.onload = function () {
+            // Begin accessing JSON data here
+            var data = JSON.parse(this.response);
+            if (requestTypes.status >= 200 && requestTypes.status < 400) {
+                fill(data.edges, 'edgeTypeSelect');
+            } else {
+                console.log('error')
+            }
+        }
+        requestTypes.send();</script>
+
+    </FORM>
+
+    <!-- Attributes controller -->
+    <form name="Attributes">
+        Attributes
+
+        <select id="elementsSelect" size="1">
+            <option disabled>Choose element</option>
+        </select>
+
+        <input type="button" value="Show attributes" onClick="showAttributes()">
+        <input type="button" value="Save attributes" onClick="saveAttributes()">
+
+        <script type="text/javascript">var activeElement = null;
+
+            function saveAttributes() {
+                if (activeElement == null) {
+                    alert('No element chosen');
+                    return;
+                }
+                var tbl = document.getElementById('attributeTable');
+                for (var i = 0; i < activeElement.attributes.length; i++) {
+                    var attr = activeElement.attributes[i];
+                    var newValue = document.getElementById('attrInput' + attr.name).value;
+                    console.log('/api/Attribute/AirSimModel/' + activeElement.id + '/' + attr.name + '/value/' + newValue);
+                    requestSmth('PUT', '/api/Attribute/AirSimModel/' + activeElement.id + '/' + attr.name + '/value/' + newValue);
+                }
+
+            }
+
+            function showAttributes() {
+                if (activeElement != null) {
+                    var element = document.getElementById('attributeTable');
+                    element.parentNode.removeChild(element);
+                }
+
+                var e = document.getElementById("elementsSelect");
+                var prototype = e.options[e.selectedIndex].data;
+                var url = "/api/Element/AirSimModel/" + prototype.id;
+                activeElement = JSON.parse(requestSmth('GET', url));
+                tableCreate(activeElement.attributes);
+            }
+
+            function tableCreate(attributes) {
+                var body = document.body,
+                    tbl = document.createElement('table');
+                tbl.style.width = '100px';
+                tbl.style.border = "2px solid black";
+                tbl.setAttribute('id', 'attributeTable')
+
+                var head = tbl.insertRow();
+                head.insertCell().appendChild(document.createTextNode('Name'));
+                head.insertCell().appendChild(document.createTextNode('Type'));
+                head.insertCell().appendChild(document.createTextNode('Value'));
+
+                for (var i = 0; i < attributes.length; i++) {
+                    var attr = attributes[i];
+                    var tr = tbl.insertRow();
+                    tr.insertCell().appendChild(document.createTextNode(attr.name));
+                    tr.insertCell().appendChild(document.createTextNode(attr.kind));
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'text');
+                    input.setAttribute('id', 'attrInput' + attr.name);
+                    input.setAttribute('value', attr.stringValue);
+                    tr.insertCell().appendChild(input);
+                    //td.style.border = "2px solid black";
+                }
+                body.appendChild(tbl);
+            }
+            fill(JSON.parse(requestSmth('GET', "/api/Model/AirSimModel")).elements, "elementsSelect");</script>
+       </form >
+
+     </BODY >
+</HTML >
