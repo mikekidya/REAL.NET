@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\tests\NUnit\build\NUnit.props" Condition="Exists('..\..\..\packages\tests\NUnit\build\NUnit.props')" Label="Paket" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>9e7065a4-ba5e-4752-84bf-54d5c00db60c</ProjectGuid>
+    <ProjectGuid>cf713cdc-81be-411b-98d7-08dbb3fb7db4</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Repo</RootNamespace>
-    <AssemblyName>Repo</AssemblyName>
+    <RootNamespace>Repo.Tests</RootNamespace>
+    <AssemblyName>Repo.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Name>Repo</Name>
+    <Name>Repo.Tests</Name>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -20,19 +21,19 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <Tailcalls>false</Tailcalls>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Repo.Tests.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <Tailcalls>true</Tailcalls>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Repo.Tests.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
@@ -43,7 +44,7 @@
     <Tailcalls>true</Tailcalls>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Repo.Tests.XML</DocumentationFile>
     <OutputPath>bin\MonoRelease\</OutputPath>
   </PropertyGroup>
   <Choose>
@@ -59,6 +60,46 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.1'">
+      <PropertyGroup>
+        <__paket__NUnit3TestAdapter_props>net35\NUnit3TestAdapter</__paket__NUnit3TestAdapter_props>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <Import Project="..\..\..\packages\tests\NUnit3TestAdapter\build\$(__paket__NUnit3TestAdapter_props).props" Condition="Exists('..\..\..\packages\tests\NUnit3TestAdapter\build\$(__paket__NUnit3TestAdapter_props).props')" Label="Paket" />
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <ItemGroup>
+    <None Include="App.config" />
+    <Compile Include="AssemblyInfo.fs" />
+    <None Include="paket.references" />
+    <Content Include="Data\test.rns">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="DataModelTests.fs" />
+    <Compile Include="DataRepoTest.fs" />
+    <Compile Include="DataElementTests.fs" />
+    <Compile Include="CoreMetametamodelBuilderTests.fs" />
+    <Compile Include="CoreSemanticLayerTests.fs" />
+    <Compile Include="InfrastructureSemanticLayerTests.fs" />
+    <Compile Include="RobotsTestModelsTests.fs" />
+    <Compile Include="FacadeRepoTests.fs" />
+    <Compile Include="FacadeModelTests.fs" />
+    <Compile Include="FacadeAttributeTests.fs" />
+    <Compile Include="FacadeNodeTests.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Repo.Source\Repo.fsproj">
+      <Project>{9e7065a4-ba5e-4752-84bf-54d5c00db60c}</Project>
+      <Name>Repo</Name>
+    </ProjectReference>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -66,58 +107,15 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <None Include="paket.references" />
-    <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Properties\AssemblyInternalsVisibleTo.fs" />
-    <Compile Include="Exceptions.fs" />
-    <Compile Include="DataLayer\DataLayer.fs" />
-    <Compile Include="DataLayer\DataElement.fs" />
-    <Compile Include="DataLayer\DataEdge.fs" />
-    <Compile Include="DataLayer\DataAssociation.fs" />
-    <Compile Include="DataLayer\DataGeneralization.fs" />
-    <Compile Include="DataLayer\DataNode.fs" />
-    <Compile Include="DataLayer\DataModel.fs" />
-    <Compile Include="DataLayer\DataRepo.fs" />
-    <Compile Include="Serializer\DataObjects.fs" />
-    <Compile Include="Serializer\Serializer.fs" />
-    <Compile Include="Serializer\Deserializer.fs" />
-    <Compile Include="CoreSemanticLayer.fs" />
-    <Compile Include="InfrastructureSemanticLayer.fs" />
-    <Compile Include="ModelBuilders\IModelBuilder.fs" />
-    <Compile Include="ModelBuilders\InfrastructureMetamodelBuilder.fs" />
-    <Compile Include="ModelBuilders\LanguageMetamodelBuilder.fs" />
-    <Compile Include="ModelBuilders\RobotsMetamodelBuilder.fs" />
-    <Compile Include="ModelBuilders\RobotsTestModelBuilder.fs" />
-    <Compile Include="ModelBuilders\AirSimMetamodelBuilder.fs" />
-    <Compile Include="ModelBuilders\AirSimModelBuilder.fs" />
-    <Compile Include="ModelBuilders\CoreMetametamodelBuilder.fs" />
-    <Compile Include="FacadeLayer.fs" />
-    <Compile Include="FacadeLayer\Visual\VisualInfo.fs" />
-    <Compile Include="FacadeLayer\Visual\VisualNodeInfo.fs" />
-    <Compile Include="FacadeLayer\Visual\VisualEdgeInfo.fs" />
-    <Compile Include="FacadeLayer\Attribute.fs" />
-    <Compile Include="FacadeLayer\Element.fs" />
-    <Compile Include="FacadeLayer\Edge.fs" />
-    <Compile Include="FacadeLayer\Model.fs" />
-    <Compile Include="FacadeLayer\Node.fs" />
-    <Compile Include="FacadeLayer\ElementRepository.fs" />
-    <Compile Include="FacadeLayer\Repo.fs" />
-    <Compile Include="RepoFactory.fs" />
-    <Content Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Numerics" />
-  </ItemGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.1'">
       <ItemGroup>
         <Reference Include="FSharp.Core">
-          <HintPath>..\..\packages\FSharp.Core\lib\net45\FSharp.Core.dll</HintPath>
+          <HintPath>..\..\..\packages\tests\FSharp.Core\lib\net45\FSharp.Core.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -127,8 +125,19 @@
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.1'">
       <ItemGroup>
-        <Reference Include="Newtonsoft.Json">
-          <HintPath>..\..\packages\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll</HintPath>
+        <Reference Include="FsUnit.NUnit">
+          <HintPath>..\..\..\packages\tests\FsUnit\lib\net46\FsUnit.NUnit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.1'">
+      <ItemGroup>
+        <Reference Include="nunit.framework">
+          <HintPath>..\..\..\packages\tests\NUnit\lib\net45\nunit.framework.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
