@@ -15,6 +15,7 @@
 namespace Repo.FacadeLayer
 
 open Repo
+open Repo.Visual
 
 /// Implementation of edge wrapper.
 type Edge
@@ -31,8 +32,8 @@ type Edge
 
     let mutable visualInfo = info
 
-    new(infrastructure, element, elementRepository, attributeRepository) 
-        = Edge(infrastructure, element, elementRepository, attributeRepository, VisualEdgeInfo()) 
+    new(infrastructure, element, elementRepository, attributeRepository, id) 
+        = Edge(infrastructure, element, elementRepository, attributeRepository, id, VisualEdgeInfo()) 
 
     interface IEdge with
         member this.From

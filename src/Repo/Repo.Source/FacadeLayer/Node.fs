@@ -30,12 +30,11 @@ type Node
     ) =
 
     inherit Element(infrastructure, element, elementRepository, attributeRepository, id)
-    interface INode
 
     let mutable visualInfo = info
 
-    new(infrastructure, element, elementRepository, attributeRepository) 
-        = Node(infrastructure, element, elementRepository, attributeRepository, VisualNodeInfo()) 
+    new(infrastructure, element, elementRepository, attributeRepository, id) 
+        = Node(infrastructure, element, elementRepository, attributeRepository, id, VisualNodeInfo()) 
 
     interface INode with
         
