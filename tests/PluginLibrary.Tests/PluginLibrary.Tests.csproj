@@ -66,7 +66,7 @@
       <Project>{c57410a1-a86f-418b-9ac7-38249450c497}</Project>
       <Name>SamplePlugin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Repo\Repo.fsproj">
+    <ProjectReference Include="..\..\src\Repo\Repo.Source\Repo.fsproj">
       <Project>{9e7065a4-ba5e-4752-84bf-54d5c00db60c}</Project>
       <Name>Repo</Name>
     </ProjectReference>

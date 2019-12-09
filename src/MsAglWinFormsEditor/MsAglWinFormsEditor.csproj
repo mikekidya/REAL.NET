@@ -106,7 +106,7 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Repo\Repo.fsproj">
+    <ProjectReference Include="..\Repo\Repo.Source\Repo.fsproj">
       <Project>{9e7065a4-ba5e-4752-84bf-54d5c00db60c}</Project>
       <Name>Repo</Name>
     </ProjectReference>
