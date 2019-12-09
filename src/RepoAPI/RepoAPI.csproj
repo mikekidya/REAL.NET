@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Repo\Repo.fsproj" />
+    <ProjectReference Include="..\Repo\Repo.Source\Repo.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
