@@ -167,7 +167,7 @@ Target.create "All" ignore
   ==> "AssemblyInfo"
   ==> "Build"
   ==> "CopyBinaries"
-  ==> "RunTests"
+//  ==> "RunTests"
   ==> "All"
 
 Target.runOrDefault "All"
