@@ -163,8 +163,9 @@ Target.create "RunTests" (fun _ ->
 
 Target.create "All" ignore
 
-"Clean"
-  ==> "AssemblyInfo"
+// "Clean"
+//  ==> "AssemblyInfo"
+"AssemblyInfo"
   ==> "Build"
   ==> "CopyBinaries"
 //  ==> "RunTests"
