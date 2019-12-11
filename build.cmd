@@ -12,6 +12,7 @@ rem if exist ".fake"          (rmdir /Q /S ".fake"         )
 rem if exist "build.fsx.lock" (del         "build.fsx.lock")
 
 dotnet restore src/Repo
+dotnet build src/Repo
 dotnet restore build.proj
 
 %FAKE_CLI% run build.fsx --target "All"
