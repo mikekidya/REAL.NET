@@ -3,6 +3,8 @@
 set -eu
 set -o pipefail
 
+dotnet restore src/Repo
+dotnet build src/Repo
 dotnet restore build.proj
 
 # liberated from https://stackoverflow.com/a/18443300/433393
