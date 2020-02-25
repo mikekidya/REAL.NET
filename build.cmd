@@ -13,6 +13,5 @@ rem if exist "build.fsx.lock" (del         "build.fsx.lock")
 
 dotnet restore build.proj
 dotnet restore src/Repo
-dotnet build src/Repo
 
 %FAKE_CLI% run build.fsx --target "All"
